@@ -9,7 +9,7 @@ class Reserva{
         this.quarto = quarto
         this.id_c = id_c
     }
-
+    
 }
 
 class Funcionario{
@@ -302,569 +302,378 @@ class Sistema{
         this.funcionarios = []
     }
 
-}
+    inicio(){
 
-hotel_fluxo = new Sistema
+        var a = new Quartos(this, 4, "R$ 200,00", "Quarto do Sol", "Quarto perfeito para sua família, acomodando 4 camas, além de uma bela vista para a praia.", this)
+        var b = new Quartos(this, 2, "R$ 120,00", "Quarto da Lua", "Quarto perfeito para quem busca conforto, acomodando 2 camas e uma varanda para utilização.", this)
+        var c = new Cliente()
+        c.cadastro("Caio Ongarato", "28/02/2008", "14261664790", "caio@", 123, this)
+        var d = new Cliente()
+        d.cadastro("Daniel Arruda", "29/04/2005", "14223654790", "daniel@", 456, this)
+        var f = new Funcionario()
+        f.cadastro("João", "1234567", "joao@", 1234, this)
 
-a = new Quartos(hotel_fluxo, 4, "R$ 200,00", "Quarto do Sol", "Quarto perfeito para sua família, acomodando 4 camas, além de uma bela vista para a praia.", hotel_fluxo)
-b = new Quartos(hotel_fluxo, 2, "R$ 120,00", "Quarto da Lua", "Quarto perfeito para quem busca conforto, acomodando 2 camas e uma varanda para utilização.", hotel_fluxo)
-c = new Cliente()
-c.cadastro("Caio Ongarato", "28/02/2008", "14261664790", "caio@", 123, hotel_fluxo)
-d = new Cliente()
-d.cadastro("Daniel Arruda", "29/04/2005", "14223654790", "daniel@", 456, hotel_fluxo)
-f = new Funcionario()
-f.cadastro("João", "1234567", "joao@", 1234, hotel_fluxo)
-
-console.log("\nSeja bem-vindo ao Sistema da Hotel Fluxo! O que deseja fazer?\n")
-console.log('Cadastro (digite 1), Login (digite 2) ou Sair do Programa (digite 3)?\n')
-while(true){
-    let pergunta = requisicao.question("Digite aqui: ")
-
-    if(pergunta == 1 || pergunta == 2 || pergunta ==3){
-        resposta = pergunta
-        break
-    }
-
-    console.log('\nDigite uma opção válida.\n')
-
-}
-
-if(resposta == 1){
-    console.log("\nDeseja cadastrar-se em nossa plataforma como Cliente ou Funcionário? [C/F]\n")
-    
-    while(true){
-        let pergunta1 = requisicao.question("Insira sua resposta aqui: ")
-
-        if(pergunta1 == "C" || pergunta1 == "F"){
-            resposta1 = pergunta1
-            break
-        }
-
-        console.log('\nDigite uma opção válida.\n')
-
-    }
-    
-    if(resposta1 == 'C'){
-
-        console.log("\nInsira as informações abaixo para a criação de sua conta.")
-        let pergunta1 = requisicao.question('\nUser Name: ')
-        let pergunta2 = requisicao.question('\nData de nascimento: ')
-        let pergunta3 = requisicao.question("\nCPF: ")
-        let pergunta4 = requisicao.question("\nEmail: ")
-        let pergunta5 = requisicao.question('\nSenha: ')
-
-        new_user = new Cliente()
-
-        new_user.cadastro(pergunta1, pergunta2, pergunta3, pergunta4, pergunta5, hotel_fluxo)
-
-        console.log(`\nID gerado: ${new_user.id_u}`)
+        console.log("\nVocê está sendo direcionado para o Sistema da Hotel Fluxo.")
+        console.log("\nDeseja continuar? Digite sim (S) ou não [N]")
+        let inicio1
+        let new_user
 
         while(true){
+                let inicio = requisicao.question("\nInsira sua resposta aqui: ")
 
-            console.log('\nUsuário logado! O que deseja fazer?')
-            console.log('\nObs: Digite o número correspondente a cada ação')
-            console.log('\n[1] Ver meus Dados')
-            console.log('\n[2] Ver Lista de Quartos')
-            console.log('\n[3] Fazer Reserva')
-            console.log('\n[4] Cancelar Reserva')
-            console.log('\n[5] Ver minhas reservas')
-            console.log('\n[6] Sair do Programa')
-
-            let answer = requisicao.question("\nInsira sua resposta: ")
-
-            if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6){
-                resposta = answer
-                if(resposta == 1){
-
-                    new_user.ver_meus_dados()
-                }
-                else if(resposta == 2){
-
-                    new_user.ver_lista_de_quartos(hotel_fluxo)
-
-                }
-                else if(resposta == 3){
-
-                    let entrada = requisicao.question("\nData de Check-In: ")
-                    let saida = requisicao.question("\nData de Check-Out: ")
-
-                    console.log('\nQual dos quartos você gostaria de realizar uma reserva?')
-
-                    var c = 0
-
-                    while(c < hotel_fluxo.quartos.length){
-                        var bb = c+1
-                        console.log(`\n[${bb}] Nome: ${hotel_fluxo.quartos[c].name}`)
-                        c += 1
-                    }
-
-                    console.log("\nDigite o número correspondente.")
-                    let bedroom = requisicao.question("\nInsira sua resposta aqui: ")
-                    new_user.fazer_reserva(new Reserva(hotel_fluxo, entrada, saida, hotel_fluxo.quartos[bedroom-1].name, new_user.id_u), hotel_fluxo)
-
-                    console.log('\nReserva concluída!')
-                    console.log('\nDados:')
-                    console.log(`\nNome do Quarto: ${new_user.reserva.quarto}`)
-                    console.log(`\nData de Check-In: ${new_user.reserva.check_in}`)
-                    console.log(`\nData de Check-Out: ${new_user.reserva.check_out}`)
-                    console.log(`\nID do Cliente: ${new_user.reserva.id_c}`)
-                    console.log(`\nID da Reserva: ${new_user.reserva.id_u}`)
-                    console.log(`\nStatus: ${new_user.reserva.status}`)
-                
-                }
-                else if (resposta == 4){
-
-                    if(new_user.reserva == null){
-
-                        console.log("\nVocê não apresenta reservas.")
-                    }
-                    else{
-
-                        new_user.cancelar_reserva()
-                        console.log('\nReserva Cancelada!')
-
-                    }
-
-                }
-                else if (resposta == 5){
-
-                    if(new_user.reserva == null){
-
-                        console.log("\nVocê não apresenta reservas.")
-                    }
-                    else{
-
-                        console.log("\nSua reserva:")
-                        console.log(`\nNome do Quarto: ${new_user.reserva.quarto}`)
-                        console.log(`\nData de Check-In: ${new_user.reserva.check_in}`)
-                        console.log(`\nData de Check-Out: ${new_user.reserva.check_out}`)
-                        console.log(`\nID do Cliente: ${new_user.reserva.id_c}`)
-                        console.log(`\nID da Reserva: ${new_user.reserva.id_u}`)
-
-                    }                      
-                }  
-                else if(resposta == 6){
+                if(inicio == "S" || inicio == "N"){
+                    inicio1 = inicio
                     break
-                }                                     
-                else{
+                }
 
-                    console.log('\nDigite uma opção válida.')
-                }           
-            }
+                console.log('\nDigite uma opção válida.\n')
         }
-    }
-    else if(resposta1 == 'F'){
 
-        console.log("\nInsira as informações abaixo para a criação de sua conta.")
-        let pergunta1 = requisicao.question('\nUser Name: ')
-        let pergunta2 = requisicao.question("\nCPF: ")
-        let pergunta3 = requisicao.question("\nEmail: ")
-        let pergunta4 = requisicao.question('\nSenha: ')
+        if(inicio1 == "S"){
 
-        new_user = new Funcionario()
+            console.log("\nSeja bem-vindo ao Sistema da Hotel Fluxo! Deseja entrar como Cliente (C) ou Funcionário (F)?")
+            let resposta1
 
-        new_user.cadastro(pergunta1, pergunta2, pergunta3, pergunta4, hotel_fluxo)
+            while(true){
+                    let pergunta1 = requisicao.question("\nInsira sua resposta aqui: ")
 
-        console.log(`\nID gerado: ${new_user.id_u}`)
-
-        while(true){
-
-            console.log('\nObs: Digite o número correspondente a cada ação')
-            console.log('\n[1] Ver meus Dados')
-            console.log('\n[2] Ver Lista de Quartos')
-            console.log('\n[3] Ver Lista de Reservas')
-            console.log('\n[4] Ver Lista de Clientes')
-            console.log('\n[5] Mudar Status da Reserva')
-            console.log('\n[6] Adicionar quarto')
-            console.log('\n[7] Sair do Programa')
-
-            let answer = requisicao.question("\nInsira sua resposta: ")
-
-            if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7){
-                resposta = answer
-                if(resposta == 1){
-
-                    console.log(new_user.ver_meus_dados())
-                }
-                else if(resposta == 2){
-
-                    new_user.ver_lista_de_quartos(hotel_fluxo)
-
-                }
-                else if(resposta == 3){
-
-                    new_user.ver_lista_de_reservas(hotel_fluxo)
-                
-                }
-                else if (resposta == 4){
-
-                    new_user.ver_lista_de_clientes(hotel_fluxo)
-
-                }
-                else if (resposta == 5){
-
-                    if(hotel_fluxo.reservas.length == 0){
-
-                        console.log("Nenhuma reserva encontrada.")
+                    if(pergunta1 == "C" || pergunta1 == "F"){
+                        resposta1 = pergunta1
+                        break
                     }
-                    else{
-                        var c = 0
-                        console.log("\nDeseja alterar os status de qual reserva?")
-                        console.log("\nDigite o número correspondente.")
-                        
+
+                    console.log('\nDigite uma opção válida.\n')
+
+                }
+                if(resposta1 == "C"){
+
+                    console.log('\nDeseja realizar Cadastro (digite 1), Login (digite 2)?\n')
+                    let resposta
+                    while(true){
+                        let pergunta = requisicao.question("Digite aqui: ")
+                        if(pergunta == 1 || pergunta == 2 || pergunta ==3){
+                            resposta = pergunta
+                            break
+                        }
+
+                        console.log('\nDigite uma opção válida.\n')
+                    }
+                    if(resposta == 1){
+
+                        console.log("\nInsira as informações abaixo para a criação de sua conta.")
+                        let pergunta1 = requisicao.question('\nUser Name: ')
+                        let pergunta2 = requisicao.question('\nData de nascimento: ')
+                        let pergunta3 = requisicao.question("\nCPF: ")
+                        let pergunta4 = requisicao.question("\nEmail: ")
+                        let pergunta5 = requisicao.question('\nSenha: ')
+
+                        new_user = new Cliente()
+
+                        new_user.cadastro(pergunta1, pergunta2, pergunta3, pergunta4, pergunta5, this)
+
+                        console.log(`\nID gerado: ${new_user.id_u}`)
+                    }
+                    else if (resposta == 2){
                         while(true){
+                            new_user = null
+                            let pp = requisicao.question("\nEmail: ")
+                            let qq = requisicao.question("\nSenha: ")
 
-                            console.log(`\n${c+1}:
-                            Data de Check-In: ${sistema.reservas[c].check_in}
-                            Data de Check-Out: ${sistema.reservas[c].check_out}
-                            Quarto Reservado: ${sistema.reservas[c].quarto.name}
-                            ID do Cliente: ${sistema.reservas[c].id_c}`)
-                            c += 1
+                            for(var i of this.clientes){
 
-                        if(sistema.reservas.length == c){
-                            break
+                                if(i.password == qq || i.email == pp){
+
+                                    new_user = i
+                                    break
+                                }
+                                else{
+                                    console.log('\nEmail ou senha Incorretos.')
+                                    console.log('\nTente novamente.')
+                                }
+                            }
+                            if(new_user != null){
+                                break
+                            }
                         }
-
                     }
+                    
+                    console.log('\nUsuário logado! O que deseja fazer?')
 
                     while(true){
 
-                        let pp = requisicao.question("\nInsira sua resposta: ")
+                        console.log('\nObs: Digite o número correspondente a cada ação')
+                        console.log('\n[1] Ver meus Dados')
+                        console.log('\n[2] Ver Lista de Quartos')
+                        console.log('\n[3] Fazer Reserva')
+                        console.log('\n[4] Cancelar Reserva')
+                        console.log('\n[5] Ver minhas reservas')
+                        console.log('\n[6] Sair do Programa')
 
-                        if(pp > 0 || pp <= hotel_fluxo.reservas.length){
-                            break
-                        }
-                        else{
-                            console.log('Insira uma opção válida.')
+                        let answer = requisicao.question("\nInsira sua resposta: ")
+                        let resp 
+
+                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6){
+                            resp = answer
+                            if(resp == 1){
+
+                                new_user.ver_meus_dados()
+                            }
+                            else if(resp == 2){
+
+                                new_user.ver_lista_de_quartos(this)
+
+                            }
+                            else if(resp == 3){
+
+                                let entrada = requisicao.question("\nData de Check-In: ")
+                                let saida = requisicao.question("\nData de Check-Out: ")
+
+                                console.log('\nQual dos quartos você gostaria de realizar uma reserva?')
+
+                                let c = 0
+
+                                while(c < this.quartos.length){
+                                    var bb = c+1
+                                    console.log(`\n[${bb}] Nome: ${this.quartos[c].name}`)
+                                    c += 1
+                                }
+
+                                console.log("\nDigite o número correspondente.")
+                                let bedroom = requisicao.question("\nInsira sua resposta aqui: ")
+                                new_user.fazer_reserva(new Reserva(this, entrada, saida, this.quartos[bedroom-1].name, new_user.id_u), this)
+
+                                console.log('\nReserva concluída!')
+                                console.log('\nDados:')
+                                console.log(`\nNome do Quarto: ${new_user.reserva.quarto}`)
+                                console.log(`\nData de Check-In: ${new_user.reserva.check_in}`)
+                                console.log(`\nData de Check-Out: ${new_user.reserva.check_out}`)
+                                console.log(`\nID do Cliente: ${new_user.reserva.id_c}`)
+                                console.log(`\nID da Reserva: ${new_user.reserva.id_u}`)
+                                console.log(`\nStatus: ${new_user.reserva.status}`)
+                            
+                            }
+                            else if (resp == 4){
+
+                                if(new_user.reserva == null){
+
+                                    console.log("\nVocê não apresenta reservas.")
+                                }
+                                else{
+
+                                    new_user.cancelar_reserva()
+                                    console.log('\nReserva Cancelada!')
+
+                                }
+
+                            }
+                            else if (resp == 5){
+
+                                if(new_user.reserva == null){
+
+                                    console.log("\nVocê não apresenta reservas.")
+                                }
+                                else{
+
+                                    console.log("\nSua reserva:")
+                                    console.log(`\nNome do Quarto: ${new_user.reserva.quarto}`)
+                                    console.log(`\nData de Check-In: ${new_user.reserva.check_in}`)
+                                    console.log(`\nData de Check-Out: ${new_user.reserva.check_out}`)
+                                    console.log(`\nID do Cliente: ${new_user.reserva.id_c}`)
+                                    console.log(`\nID da Reserva: ${new_user.reserva.id_u}`)
+
+                                }                      
+                            }  
+                            else if(resp == 6){
+                                break
+                            }                                     
+                            else{
+
+                                console.log('\nDigite uma opção válida.')
+                            }           
                         }
                     }
+                    console.log("\nVolte sempre!")
+                    console.log("\n--- FIM ---\n")
 
-                    console.log('\nDeseja alterar seu status para:')
-                    console.log('\n[1] Pendente')
-                    console.log('\n[2] Adiada')
-                    console.log('\n[3] Realizada')
-                    console.log('\n[4] Cancelada')
+                }
+                else if(resposta1 == "F"){
 
+                    console.log('Deseja realizar Cadastro (digite 1), Login (digite 2) ou Sair do Programa (digite 3)?\n')
+                    let resposta
                     while(true){
+                        let pergunta = requisicao.question("Digite aqui: ")
 
-                        let cc = requisicao.question("\nInsira sua resposta: ")
-
-                        if(cc == 1 || cc == 2 || cc == 3 || cc == 4){
+                        if(pergunta == 1 || pergunta == 2 || pergunta ==3){
+                            resposta = pergunta
                             break
                         }
-                        else{
-                            console.log('Insira uma opção válida.')
-                        }
+
+                        console.log('\nDigite uma opção válida.\n')
                     }
-                    new_user.mudar_status_reseva(hotel_fluxo, pp, cc)
+                    if(resposta == 1){
 
+                        console.log("\nInsira as informações abaixo para a criação de sua conta.")
+                        let pergunta1 = requisicao.question('\nUser Name: ')
+                        let pergunta2 = requisicao.question("\nCPF: ")
+                        let pergunta3 = requisicao.question("\nEmail: ")
+                        let pergunta4 = requisicao.question('\nSenha: ')
+
+                        new_user = new Funcionario()
+
+                        new_user.cadastro(pergunta1, pergunta2, pergunta3, pergunta4, this)
+
+                        console.log(`\nID gerado: ${new_user.id_u}`)
                     }
-                }
-                else if(resposta == 6){
-
-                    let tt = requisicao.question("\nNome do Quarto: ")
-                    let yy = requisicao.question("\nNº de camas: ")
-                    let uu = requisicao.question("\nP/p Noite: ")
-                    let ii = requisicao.question("\nDescricao: ")
-
-                    new_user.adicionar_quarto(hotel_fluxo, tt, yy, uu, ii)
-
-                }  
-                else if(resposta == 7){
-                    break
-                }                                     
-                else{
-
-                    console.log('\nDigite uma opção válida.')
-                }           
-            }
-        }
-
-    }
-}
-else if(resposta == 2){
-
-    console.log("\nDeseja entrar em nossa plataforma como Cliente ou Funcionário? [C/F]\n")
-
-    while(true){
-        let pergunta1 = requisicao.question("Insira sua resposta aqui: ")
-
-        if(pergunta1 == "C" || pergunta1 == "F"){
-            resposta1 = pergunta1
-            break
-        }
-        console.log('\nDigite uma opção válida.\n')
-    }
-
-    if(resposta1 == 'C'){
-
-        while(true){
-
-            new_user = null
-            let pp = requisicao.question("\nEmail: ")
-            let qq = requisicao.question("\nSenha: ")
-
-            for(var i of hotel_fluxo.clientes){
-
-                if(i.password == qq || i.email == pp){
-
-                    new_user = i
-                    break
-                }
-                else{
-                    console.log('\nEmail ou senha Incorretos.')
-                    console.log('\nTente novamente.')
-                }
-            }
-            if(new_user != null){
-                break
-            }
-
-            }
-
-        console.log('\nUsuário logado! O que deseja fazer?')
-
-        while(true){
-
-            console.log('\nObs: Digite o número correspondente a cada ação')
-            console.log('\n[1] Ver meus Dados')
-            console.log('\n[2] Ver Lista de Quartos')
-            console.log('\n[3] Fazer Reserva')
-            console.log('\n[4] Cancelar Reserva')
-            console.log('\n[5] Ver minhas reservas')
-            console.log('\n[6] Sair do Programa')
-
-            let answer = requisicao.question("\nInsira sua resposta: ")
-
-            if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6){
-                resposta = answer
-                if(resposta == 1){
-
-                    new_user.ver_meus_dados()
-                }
-                else if(resposta == 2){
-
-                    new_user.ver_lista_de_quartos(hotel_fluxo)
-
-                }
-                else if(resposta == 3){
-
-                    let entrada = requisicao.question("\nData de Check-In: ")
-                    let saida = requisicao.question("\nData de Check-Out: ")
-
-                    console.log('\nQual dos quartos você gostaria de realizar uma reserva?')
-
-                    var c = 0
-
-                    while(c < hotel_fluxo.quartos.length){
-                        var bb = c+1
-                        console.log(`\n[${bb}] Nome: ${hotel_fluxo.quartos[c].name}`)
-                        c += 1
-                    }
-
-                    console.log("\nDigite o número correspondente.")
-                    let bedroom = requisicao.question("\nInsira sua resposta aqui: ")
-                    new_user.fazer_reserva(new Reserva(hotel_fluxo, entrada, saida, hotel_fluxo.quartos[bedroom-1].name, new_user.id_u), hotel_fluxo)
-
-                    console.log('\nReserva concluída!')
-                    console.log('\nDados:')
-                    console.log(`\nNome do Quarto: ${new_user.reserva.quarto}`)
-                    console.log(`\nData de Check-In: ${new_user.reserva.check_in}`)
-                    console.log(`\nData de Check-Out: ${new_user.reserva.check_out}`)
-                    console.log(`\nID do Cliente: ${new_user.reserva.id_c}`)
-                    console.log(`\nID da Reserva: ${new_user.reserva.id_u}`)
-                    console.log(`\nStatus: ${new_user.reserva.status}`)
-                
-                }
-                else if (resposta == 4){
-
-                    if(new_user.reserva == null){
-
-                        console.log("\nVocê não apresenta reservas.")
-                    }
-                    else{
-
-                        new_user.cancelar_reserva()
-                        console.log('\nReserva Cancelada!')
-
-                    }
-
-                }
-                else if (resposta == 5){
-
-                    if(new_user.reserva == null){
-
-                        console.log("\nVocê não apresenta reservas.")
-                    }
-                    else{
-
-                        console.log("\nSua reserva:")
-                        console.log(`\nNome do Quarto: ${new_user.reserva.quarto}`)
-                        console.log(`\nData de Check-In: ${new_user.reserva.check_in}`)
-                        console.log(`\nData de Check-Out: ${new_user.reserva.check_out}`)
-                        console.log(`\nID do Cliente: ${new_user.reserva.id_c}`)
-                        console.log(`\nID da Reserva: ${new_user.reserva.id_u}`)
-
-                    }                      
-                }  
-                else if(resposta == 6){
-                    break
-                }                                     
-                else{
-
-                    console.log('\nDigite uma opção válida.')
-                }           
-            }
-        }
-    }
-    else if(resposta1 == 'F'){
-
-        while(true){
-
-            new_user = null
-            let pp = requisicao.question("\nEmail: ")
-            let qq = requisicao.question("\nSenha: ")
-
-            for(var i of hotel_fluxo.funcionarios){
-
-                if(i.password == qq || i.email == pp){
-
-                    new_user = i
-                    break
-                }
-                else{
-                    console.log('\nEmail ou senha Incorretos.')
-                    console.log('\nTente novamente.')
-                }
-            }
-            if(new_user != null){
-                break
-            }
-
-            }
-
-        console.log('\nUsuário logado! O que deseja fazer?')
-
-        while(true){
-
-            console.log('\nObs: Digite o número correspondente a cada ação')
-            console.log('\n[1] Ver meus Dados')
-            console.log('\n[2] Ver Lista de Quartos')
-            console.log('\n[3] Ver Lista de Reservas')
-            console.log('\n[4] Ver Lista de Clientes')
-            console.log('\n[5] Mudar Status da Reserva')
-            console.log('\n[6] Adicionar quarto')
-            console.log('\n[7] Sair do Programa')
-
-            let answer = requisicao.question("\nInsira sua resposta: ")
-
-            if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7){
-                resposta = answer
-                if(resposta == 1){
-
-                    console.log(new_user.ver_meus_dados())
-                }
-                else if(resposta == 2){
-
-                    new_user.ver_lista_de_quartos(hotel_fluxo)
-
-                }
-                else if(resposta == 3){
-
-                    new_user.ver_lista_de_reservas(hotel_fluxo)
-                
-                }
-                else if (resposta == 4){
-
-                    new_user.ver_lista_de_clientes(hotel_fluxo)
-
-                }
-                else if (resposta == 5){
-
-                    if(hotel_fluxo.reservas.length == 0){
-
-                        console.log("Nenhuma reserva encontrada.")
-                    }
-                    else{
-                        var c = 0
-                        console.log("\nDeseja alterar os status de qual reserva?")
-                        console.log("\nDigite o número correspondente.")
-                        
+                    else if (resposta == 2){
                         while(true){
-
-                            console.log(`\n${c+1}:
-                            Data de Check-In: ${sistema.reservas[c].check_in}
-                            Data de Check-Out: ${sistema.reservas[c].check_out}
-                            Quarto Reservado: ${sistema.reservas[c].quarto.name}
-                            ID do Cliente: ${sistema.reservas[c].id_c}`)
-                            c += 1
-
-                        if(sistema.reservas.length == c){
-                            break
+                            new_user = null
+                            let pp = requisicao.question("\nEmail: ")
+                            let qq = requisicao.question("\nSenha: ")
+                            for(var i of this.funcionarios){
+                                if(i.password == qq || i.email == pp){
+                                    new_user = i
+                                    break
+                                }
+                                else{
+                                    console.log('\nEmail ou senha Incorretos.')
+                                    console.log('\nTente novamente.')
+                                }
+                            }
+                            if(new_user != null){
+                                break
+                            }
                         }
-
                     }
+
+                    console.log('\nUsuário logado! O que deseja fazer?')
 
                     while(true){
 
-                        let pp = requisicao.question("\nInsira sua resposta: ")
+                        console.log('\nObs: Digite o número correspondente a cada ação')
+                        console.log('\n[1] Ver meus Dados')
+                        console.log('\n[2] Ver Lista de Quartos')
+                        console.log('\n[3] Ver Lista de Reservas')
+                        console.log('\n[4] Ver Lista de Clientes')
+                        console.log('\n[5] Mudar Status da Reserva')
+                        console.log('\n[6] Adicionar quarto')
+                        console.log('\n[7] Sair do Programa')
 
-                        if(pp > 0 || pp <= hotel_fluxo.reservas.length){
-                            break
-                        }
-                        else{
-                            console.log('Insira uma opção válida.')
+                        let answer = requisicao.question("\nInsira sua resposta: ")
+                        let resp
+
+                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7){
+                            resp = answer
+                            if(resp == 1){
+
+                                console.log(new_user.ver_meus_dados())
+                            }
+                            else if(resp == 2){
+
+                                new_user.ver_lista_de_quartos(this)
+
+                            }
+                            else if(resp == 3){
+
+                                new_user.ver_lista_de_reservas(this)
+                            
+                            }
+                            else if (resp == 4){
+
+                                new_user.ver_lista_de_clientes(this)
+
+                            }
+                            else if (resp == 5){
+
+                                if(this.reservas.length == 0){
+
+                                    console.log("Nenhuma reserva encontrada.")
+                                }
+                                else{
+                                    let c = 0
+                                    console.log("\nDeseja alterar os status de qual reserva?")
+                                    console.log("\nDigite o número correspondente.")
+                                    
+                                    while(true){
+
+                                        console.log(`\n${c+1}:
+                                        Data de Check-In: ${this.reservas[c].check_in}
+                                        Data de Check-Out: ${this.reservas[c].check_out}
+                                        Quarto Reservado: ${this.reservas[c].quarto.name}
+                                        ID do Cliente: ${this.reservas[c].id_c}`)
+                                        c += 1
+
+                                    if(this.reservas.length == c){
+                                        break
+                                    }
+
+                                }
+                                let pp
+                                while(true){
+
+                                    pp = requisicao.question("\nInsira sua resposta: ")
+
+                                    if(pp > 0 || pp <= this.reservas.length){
+                                        break
+                                    }
+                                    else{
+                                        console.log('Insira uma opção válida.')
+                                    }
+                                }
+
+                                console.log('\nDeseja alterar seu status para:')
+                                console.log('\n[1] Pendente')
+                                console.log('\n[2] Adiada')
+                                console.log('\n[3] Realizada')
+                                console.log('\n[4] Cancelada')
+                                
+                                let cc
+                                while(true){
+
+                                    cc = requisicao.question("\nInsira sua resposta: ")
+
+                                    if(cc == 1 || cc == 2 || cc == 3 || cc == 4){
+                                        break
+                                    }
+                                    else{
+                                        console.log('Insira uma opção válida.')
+                                    }
+                                }
+                                new_user.mudar_status_reseva(this, pp, cc)
+
+                                }
+                            }
+                            else if(resp == 6){
+
+                                let tt = requisicao.question("\nNome do Quarto: ")
+                                let yy = requisicao.question("\nNº de camas: ")
+                                let uu = requisicao.question("\nP/p Noite: ")
+                                let ii = requisicao.question("\nDescricao: ")
+
+                                new_user.adicionar_quarto(this, tt, yy, uu, ii)
+
+                            }  
+                            else if(resp == 7){
+                                break
+                            }                                     
+                            else{
+
+                                console.log('\nDigite uma opção válida.')
+                            }           
                         }
                     }
-
-                    console.log('\nDeseja alterar seu status para:')
-                    console.log('\n[1] Pendente')
-                    console.log('\n[2] Adiada')
-                    console.log('\n[3] Realizada')
-                    console.log('\n[4] Cancelada')
-
-                    while(true){
-
-                        let cc = requisicao.question("\nInsira sua resposta: ")
-
-                        if(cc == 1 || cc == 2 || cc == 3 || cc == 4){
-                            break
-                        }
-                        else{
-                            console.log('Insira uma opção válida.')
-                        }
-                    }
-                    new_user.mudar_status_reseva(hotel_fluxo, pp, cc)
-
-                    }
+                    console.log("\nVolte sempre!")
+                    console.log("\n--- FIM ---\n")
                 }
-                else if(resposta == 6){
+        }
+        else if (inicio1 == "N"){
+            console.log("Volte Sempre!")
+            console.log("--- FIM ---")
 
-                    let tt = requisicao.question("\nNome do Quarto: ")
-                    let yy = requisicao.question("\nNº de camas: ")
-                    let uu = requisicao.question("\nP/p Noite: ")
-                    let ii = requisicao.question("\nDescricao: ")
-
-                    new_user.adicionar_quarto(hotel_fluxo, tt, yy, uu, ii)
-
-                }  
-                else if(resposta == 7){
-                    break
-                }                                     
-                else{
-
-                    console.log('\nDigite uma opção válida.')
-                }           
-            }
         }
 
     }
 
 }
-else{
-    null
-}
 
-
-console.log("\nVolte sempre!")
-console.log("\n--- FIM ---\n")
+const hotel_fluxo = new Sistema()
+hotel_fluxo.inicio()
