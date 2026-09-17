@@ -174,8 +174,21 @@ class Funcionario{
 
     }
 
+    modificar_meus_dados(){
 
+        console.log("\nInsira as informações abaixo para a modificação dos dados da sua conta.")
+        let a1 = requisicao.question('\nUser Name: ')
+        let a2 = requisicao.question("\nCPF: ")
+        let a3 = requisicao.question("\nEmail: ")
+        let a4 = requisicao.question('\nSenha: ')
+        this.user_name = a1
+        this.cpf = a2
+        this.email = a3
+        this.password = a4
 
+        console.log("\nDados modificados com sucesso!")
+
+    }
 
 }
 
@@ -276,6 +289,89 @@ class Cliente{
 
     }
 
+    avalia_estadia(sistema){
+
+
+        console.log("\nQual estadia você deseja avaliar?")
+
+        var c = 0
+        console.log(`\nTotal de ${sistema.quartos.length} quartos disponíveis para avaliação:`)
+        while(true){
+
+            console.log(`\n${c+1}:`)
+            console.log(`Nome: ${sistema.quartos[c].name}`)
+            c += 1
+
+        if(sistema.quartos.length == c){
+            break
+        }
+           
+        }
+
+
+        while(true){
+
+            var xx = requisicao.question("\nInsira sua resposta aqui: ")
+
+            if(xx > 0 && xx <= sistema.quartos.length){
+                break
+            }
+            else{
+                console.log("\nInsira uma opção válida.")
+            }
+        }
+
+
+        while(true){
+
+            var nota = requisicao.question("\nNota para a estadia (0 a 5 estrelas): ")
+
+            if(nota >= 0 && nota <= 5){
+                break
+            }
+            else{
+                console.log("\nInsira uma opção válida.")
+            }
+        }
+
+
+        var comentarios = requisicao.question("\nDiga como foi sua estadia: ")
+
+        sistema.quartos[xx-1].avaliacoes.push([nota, comentarios, this])
+
+        console.log("\nConcluído!")
+
+    }
+
+
+    ver_avaliacoes(sistema){
+
+        for(var i of sistema.quartos){
+            for(var j of i.avaliacoes){
+                console.log(`\nAvaliação feita por ${j[2].user_name} acerca do ${i.name}:`)
+                console.log(`Nota: ${j[0]}`)
+                console.log(`Descrição: ${j[1]}`)
+            }
+        }
+    }
+
+    modificar_meus_dados(){
+
+        console.log("\nInsira as informações abaixo para a modificação dos dados da sua conta.")
+        let a1 = requisicao.question('\nUser Name: ')
+        let a2 = requisicao.question('\nData de nascimento: ')
+        let a3 = requisicao.question("\nCPF: ")
+        let a4 = requisicao.question("\nEmail: ")
+        let a5 = requisicao.question('\nSenha: ')
+        this.user_name = a1
+        this.nascimento = a2
+        this.cpf = a3
+        this.email = a4
+        this.password = a5
+
+        console.log("\nDados modificados com sucesso!")
+
+    }
 }
 
 
@@ -288,6 +384,7 @@ class Quartos{
         this.name = nome
         this.description = descricao
         this.sistema = sistema
+        this.avaliacoes = []
         sistema.quartos.push(this)
 
     }
@@ -381,7 +478,7 @@ class Sistema{
 
                             for(var i of this.clientes){
 
-                                if(i.password == qq || i.email == pp){
+                                if(i.login(pp, qq)){
 
                                     new_user = i
                                     break
@@ -407,12 +504,14 @@ class Sistema{
                         console.log('\n[3] Fazer Reserva')
                         console.log('\n[4] Cancelar Reserva')
                         console.log('\n[5] Ver minhas reservas')
-                        console.log('\n[6] Sair do Programa')
+                        console.log('\n[6] Avaliar a Estadia')
+                        console.log('\n[7] Ver avaliações de estadias')
+                        console.log('\n[8] Sair do Programa')
 
                         let answer = requisicao.question("\nInsira sua resposta: ")
                         let resp 
 
-                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6){
+                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7 || answer == 8){
                             resp = answer
                             if(resp == 1){
 
@@ -484,8 +583,14 @@ class Sistema{
                                 }                      
                             }  
                             else if(resp == 6){
+                                new_user.avalia_estadia(this)
+                            }
+                            else if(resp == 7){
+                                new_user.ver_avaliacoes(this)
+                            }
+                            else if(resp == 8){
                                 break
-                            }                                     
+                            }      
                             else{
 
                                 console.log('\nDigite uma opção válida.')
@@ -530,7 +635,7 @@ class Sistema{
                             let pp = requisicao.question("\nEmail: ")
                             let qq = requisicao.question("\nSenha: ")
                             for(var i of this.funcionarios){
-                                if(i.password == qq || i.email == pp){
+                                if(i.login(pp, qq)){
                                     new_user = i
                                     break
                                 }
