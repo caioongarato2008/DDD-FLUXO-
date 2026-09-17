@@ -291,35 +291,40 @@ class Cliente{
 
     avalia_estadia(sistema){
 
-
-        console.log("\nQual estadia você deseja avaliar?")
-
-        var c = 0
-        console.log(`\nTotal de ${sistema.quartos.length} quartos disponíveis para avaliação:`)
-        while(true){
-
-            console.log(`\n${c+1}:`)
-            console.log(`Nome: ${sistema.quartos[c].name}`)
-            c += 1
-
-        if(sistema.quartos.length == c){
-            break
-        }
-           
+        if(sistema.quartos.length == 0){
+            console.log("\nNenhum quarto disponível para avaliar.")
         }
 
+        else{
 
-        while(true){
+            console.log("\nQual estadia você deseja avaliar?")
 
-            var xx = requisicao.question("\nInsira sua resposta aqui: ")
+            var c = 0
+            console.log(`\nTotal de ${sistema.quartos.length} quartos disponíveis para avaliação:`)
+            while(true){
 
-            if(xx > 0 && xx <= sistema.quartos.length){
+                console.log(`\n${c+1}:`)
+                console.log(`Nome: ${sistema.quartos[c].name}`)
+                c += 1
+
+            if(sistema.quartos.length == c){
                 break
             }
-            else{
-                console.log("\nInsira uma opção válida.")
+            
             }
-        }
+
+
+            while(true){
+
+                var xx = requisicao.question("\nInsira sua resposta aqui: ")
+
+                if(xx > 0 && xx <= sistema.quartos.length){
+                    break
+                }
+                else{
+                    console.log("\nInsira uma opção válida.")
+                }
+            }
 
 
         while(true){
@@ -342,6 +347,8 @@ class Cliente{
         console.log("\nConcluído!")
 
     }
+
+}
 
 
     ver_avaliacoes(sistema){
