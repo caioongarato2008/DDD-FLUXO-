@@ -142,27 +142,27 @@ class Funcionario{
         if(status == 1){
 
             sistema.reservas[reserva-1].status = "Pendente"
-            console.log(`Status da Reserva do Cliente ${reserva.id_c} alterada para "Pendente".`)
+            console.log(`Status da Reserva do Cliente ${sistema.reservas[reserva-1].id_c} alterada para "Pendente".`)
 
         }
 
-        else if(status = 2){
+        else if(status == 2){
 
             sistema.reservas[reserva-1].status = "Adiada"
-            console.log(`Status da Reserva do Cliente ${reserva.id_c} alterada para "Adiada".`)
+            console.log(`Status da Reserva do Cliente ${sistema.reservas[reserva-1].id_c} alterada para "Adiada".`)
 
         }
 
-        else if(status = 3){
+        else if(status == 3){
 
             sistema.reservas[reserva-1].status = "Realizada" 
-            console.log(`Status da Reserva do Cliente ${reserva.id_c} alterada para "Realizada".`)
+            console.log(`Status da Reserva do Cliente ${sistema.reservas[reserva-1].id_c} alterada para "Realizada".`)
             
         }
-        else if(status = 4){
+        else if(status == 4){
 
             sistema.reservas[reserva-1].status = "Cancelada" 
-            console.log(`Status da Reserva do Cliente ${reserva.id_c} alterada para "Cancelada".`)
+            console.log(`Status da Reserva do Cliente ${sistema.reservas[reserva-1].id_c} alterada para "Cancelada".`)
             
         }
     }
@@ -262,31 +262,36 @@ class Cliente{
 
     fazer_reserva(reserva, sistema){
 
-        if(reserva in sistema.reservas){
+        let quartoOcupado = false
 
-            console.log('\nQuarto já reservado!')
+        for(let r of sistema.reservas){
+            if(r.quarto == reserva.quarto && r.status != "Cancelada"){
+                quartoOcupado = true
+                break
+            }
         }
 
+        if(quartoOcupado){
+            console.log('\nQuarto já reservado!')
+        }
         else{
-
             this.reserva = reserva
             reserva.id_u = ""
 
             while(reserva.id_u.length < 9){
                 reserva.id_u += String(Math.floor(Math.random()*10))
             }
-            
+
             reserva.status = 'Reservado'
-
             sistema.reservas.push(reserva)
-
         }
     }
 
     cancelar_reserva(){
-
+        if(this.reserva){
+            this.reserva.status = "Cancelada"
+        }
         this.reserva = null
-
     }
 
     avalia_estadia(sistema){
@@ -552,7 +557,7 @@ class Sistema{
 
                                 console.log("\nDigite o número correspondente.")
                                 let bedroom = requisicao.question("\nInsira sua resposta aqui: ")
-                                new_user.fazer_reserva(new Reserva(this, entrada, saida, this.quartos[bedroom-1].name, new_user.id_u), this)
+                                new_user.fazer_reserva(new Reserva(this, entrada, saida, this.quartos[bedroom-1], new_user.id_u), this)
 
                                 console.log('\nReserva concluída!')
                                 console.log('\nDados:')
@@ -734,7 +739,7 @@ class Sistema{
 
                                     pp = requisicao.question("\nInsira sua resposta: ")
 
-                                    if(pp > 0 || pp <= this.reservas.length){
+                                    if(pp > 0 && pp <= this.reservas.length){
                                         break
                                     }
                                     else{
@@ -771,7 +776,7 @@ class Sistema{
                                 let uu = requisicao.question("\nPreco p/noite: ")
                                 let ii = requisicao.question("\nDescricao: ")
 
-                                new_user.adicionar_quarto(this, tt, yy, uu, ii)
+                                new_user.adicionar_quarto(this, yy, uu, tt, ii)
 
                             }  
                             else if(resp == 7){
