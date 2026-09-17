@@ -353,12 +353,17 @@ class Cliente{
 
     ver_avaliacoes(sistema){
 
+        var cond = null
         for(var i of sistema.quartos){
             for(var j of i.avaliacoes){
                 console.log(`\nAvaliação feita por ${j[2].user_name} acerca do ${i.name}:`)
                 console.log(`Nota: ${j[0]}`)
                 console.log(`Descrição: ${j[1]}`)
+                cond = true
             }
+        }
+        if(cond == null){
+            console.log("\nNenhuma avaliação disponível.")
         }
     }
 
@@ -418,7 +423,7 @@ class Sistema{
         f.cadastro("João", "1234567", "joao@", 1234, this)
 
         console.log("\nVocê está sendo direcionado para o Sistema da Hotel Fluxo.")
-        console.log("\nDeseja continuar? Digite sim (S) ou não [N]")
+        console.log("\nDeseja continuar? Digite sim (S) ou não [N].")
         let inicio1
         let new_user
 
@@ -430,7 +435,7 @@ class Sistema{
                     break
                 }
 
-                console.log('\nDigite uma opção válida.\n')
+                console.log('\nDigite uma opção válida.')
         }
 
         if(inicio1 == "S"){
@@ -513,12 +518,13 @@ class Sistema{
                         console.log('\n[5] Ver minhas reservas')
                         console.log('\n[6] Avaliar a Estadia')
                         console.log('\n[7] Ver avaliações de estadias')
-                        console.log('\n[8] Sair do Programa')
+                        console.log('\n[8] Modificar meus Dados')
+                        console.log('\n[9] Sair do Programa')
 
                         let answer = requisicao.question("\nInsira sua resposta: ")
                         let resp 
 
-                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7 || answer == 8){
+                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7 || answer == 8 || answer == 9){
                             resp = answer
                             if(resp == 1){
 
@@ -596,8 +602,11 @@ class Sistema{
                                 new_user.ver_avaliacoes(this)
                             }
                             else if(resp == 8){
+                                new_user.modificar_meus_dados()
+                            }
+                            else if(resp == 9){
                                 break
-                            }      
+                            }
                             else{
 
                                 console.log('\nDigite uma opção válida.')
@@ -610,7 +619,7 @@ class Sistema{
                 }
                 else if(resposta1 == "F"){
 
-                    console.log('Deseja realizar Cadastro (digite 1), Login (digite 2) ou Sair do Programa (digite 3)?\n')
+                    console.log('\nDeseja realizar Cadastro (digite 1), Login (digite 2) ou Sair do Programa (digite 3)?\n')
                     let resposta
                     while(true){
                         let pergunta = requisicao.question("Digite aqui: ")
@@ -668,12 +677,13 @@ class Sistema{
                         console.log('\n[4] Ver Lista de Clientes')
                         console.log('\n[5] Mudar Status da Reserva')
                         console.log('\n[6] Adicionar quarto')
-                        console.log('\n[7] Sair do Programa')
+                        console.log('\n[7] Modificar meus Dados')
+                        console.log('\n[8] Sair do Programa')
 
                         let answer = requisicao.question("\nInsira sua resposta: ")
                         let resp
 
-                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7){
+                        if(answer == 1 || answer == 2 || answer == 3 || answer == 4 || answer == 5 || answer == 6 || answer == 7 || answer == 8){
                             resp = answer
                             if(resp == 1){
 
@@ -757,14 +767,17 @@ class Sistema{
                             else if(resp == 6){
 
                                 let tt = requisicao.question("\nNome do Quarto: ")
-                                let yy = requisicao.question("\nNº de camas: ")
-                                let uu = requisicao.question("\nP/p Noite: ")
+                                let yy = requisicao.question("\nNumero de Camas: ")
+                                let uu = requisicao.question("\nPreco p/noite: ")
                                 let ii = requisicao.question("\nDescricao: ")
 
                                 new_user.adicionar_quarto(this, tt, yy, uu, ii)
 
                             }  
                             else if(resp == 7){
+                                new_user.modificar_meus_dados()
+                            }
+                            else if(resp == 8){
                                 break
                             }                                     
                             else{
